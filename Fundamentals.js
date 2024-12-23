@@ -115,3 +115,97 @@ function solution(string) {
 }
 
 console.log(solution("camelCasing"));
+
+/*
+Write a function that takes an array of numbers and returns the sum of the numbers. The numbers can be negative or non-integer. If the array does not contain any numbers then you should return 0.
+
+Examples
+Input: [1, 5.2, 4, 0, -1]
+Output: 9.2
+
+Input: []
+Output: 0
+
+Input: [-2.398]
+Output: -2.398
+
+Assumptions
+You can assume that you are only given numbers.
+You cannot assume the size of the array.
+You can assume that you do get an array and if the array is empty, return 0.
+*/
+function sum(numbers) {
+  return numbers.reduce((sum, num) => sum + num, 0);
+}
+
+console.log(sum([1, 5.2, 4, 0, -1]));
+
+/*
+This time no story, no theory. The examples below show you how to write function accum:
+
+Examples:
+accum("abcd") -> "A-Bb-Ccc-Dddd"
+accum("RqaEzty") -> "R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy"
+accum("cwAt") -> "C-Ww-Aaa-Tttt"
+The parameter of accum is a string which includes only letters from a..z and A..Z.
+*/
+function accum(str) {
+  return str
+    .split("")
+    .map((char, index) => char.toUpperCase() + char.toLowerCase().repeat(index))
+    .join("-");
+}
+
+console.log(accum("abcd"));
+
+/*
+Create a function that returns the sum of the two lowest positive numbers given an array of minimum 4 positive integers. No floats or non-positive integers will be passed.
+
+For example, when an array is passed like [19, 5, 42, 2, 77], the output should be 7.
+*/
+function sumTwoSmallestNumbers(numbers) {
+  const sorted = numbers.sort((a, b) => a - b);
+  return sorted[0] + sorted[1];
+}
+console.log(sumTwoSmallestNumbers([19, 5, 42, 2, 77]));
+
+/*
+You are given an array(list) strarr of strings and an integer k. Your task is to return the first longest string consisting of k consecutive strings taken in the array.
+
+Examples:
+strarr = ["tree", "foling", "trashy", "blue", "abcdef", "uvwxyz"], k = 2
+
+Concatenate the consecutive strings of strarr by 2, we get:
+
+treefoling   (length 10)  concatenation of strarr[0] and strarr[1]
+folingtrashy ("      12)  concatenation of strarr[1] and strarr[2]
+trashyblue   ("      10)  concatenation of strarr[2] and strarr[3]
+blueabcdef   ("      10)  concatenation of strarr[3] and strarr[4]
+abcdefuvwxyz ("      12)  concatenation of strarr[4] and strarr[5]
+
+Two strings are the longest: "folingtrashy" and "abcdefuvwxyz".
+The first that came is "folingtrashy" so 
+longest_consec(strarr, 2) should return "folingtrashy".
+
+In the same way:
+longest_consec(["zone", "abigail", "theta", "form", "libe", "zas", "theta", "abigail"], 2) --> "abigailtheta"
+n being the length of the string array, if n = 0 or k > n or k <= 0 return "" (return Nothing in Elm, "nothing" in Erlang).
+
+Note
+consecutive strings : follow one after another without an interruption
+*/
+function longestConsec(strarr, k) {
+  if (strarr.length === 0 || k > strarr.length || k <= 0) return "";
+  let longest = "";
+  for (let i = 0; i < strarr.length; i++) {
+    const current = strarr.slice(i, i + k).join("");
+    if (current.length > longest.length) {
+      longest = current;
+    }
+  }
+  return longest;
+}
+
+console.log(
+  longestConsec(["zone", "abigail", "theta", "form", "libe", "zas"], 2)
+);
