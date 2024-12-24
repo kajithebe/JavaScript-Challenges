@@ -209,3 +209,155 @@ function longestConsec(strarr, k) {
 console.log(
   longestConsec(["zone", "abigail", "theta", "form", "libe", "zas"], 2)
 );
+
+/*
+Create a function that accepts a string and a single character, and returns an integer of the count of occurrences the 2nd argument is found in the first one.
+
+If no occurrences can be found, a count of 0 should be returned.
+
+("Hello", 'o')  =>  1
+("Hello", 'l')  =>  2
+("", 'z')       =>  0
+Notes
+The first argument can be an empty string
+In languages with no distinct character data type, the second argument will be a string of length 1
+*/
+function strCount(str, letter) {
+  return str.split("").filter((char) => char === letter).length;
+}
+
+console.log(strCount("Hello", "o"));
+
+/*
+Your task is to make a function that can take any non-negative integer as an argument and return it with its digits in descending order. Essentially, rearrange the digits to create the highest possible number.
+
+Examples:
+Input: 42145 Output: 54421
+
+Input: 145263 Output: 654321
+
+Input: 123456789 Output: 987654321
+*/
+function descendingOrder(n) {
+  return Number(
+    n
+      .toString()
+      .split("")
+      .sort((a, b) => b - a)
+      .join("")
+  );
+}
+
+console.log(descendingOrder(123456789));
+
+/*
+Write a function that will return the count of distinct case-insensitive alphabetic characters and numeric digits that occur more than once in the input string. The input string can be assumed to contain only alphabets (both uppercase and lowercase) and numeric digits.
+
+Example
+"abcde" -> 0 # no characters repeats more than once
+"aabbcde" -> 2 # 'a' and 'b'
+"aabBcde" -> 2 # 'a' occurs twice and 'b' twice (`b` and `B`)
+"indivisibility" -> 1 # 'i' occurs six times
+"Indivisibilities" -> 2 # 'i' occurs seven times and 's' occurs twice
+"aA11" -> 2 # 'a' and '1'
+"ABBA" -> 2 # 'A' and 'B' each occur twice
+*/
+function duplicateCount(text) {
+  const charCount = {};
+  text
+    .toLowerCase()
+    .split("")
+    .forEach((char) => {
+      charCount[char] = (charCount[char] || 0) + 1;
+    });
+  const repeatedCharacters = Object.entries(charCount)
+    .filter(([char, count]) => count > 1)
+    .map(([char, count]) => `${char} repeated ${count} times`);
+
+  return Object.values(charCount).filter((count) => count > 1).length;
+}
+
+console.log(duplicateCount("aabbcde"));
+
+/*
+Given two arrays a and b write a function comp(a, b) (orcompSame(a, b)) that checks whether the two arrays have the "same" elements, with the same multiplicities (the multiplicity of a member is the number of times it appears). "Same" means, here, that the elements in b are the elements in a squared, regardless of the order.
+
+Examples
+Valid arrays
+a = [121, 144, 19, 161, 19, 144, 19, 11]  
+b = [121, 14641, 20736, 361, 25921, 361, 20736, 361]
+comp(a, b) returns true because in b 121 is the square of 11, 14641 is the square of 121, 20736 the square of 144, 361 the square of 19, 25921 the square of 161, and so on. It gets obvious if we write b's elements in terms of squares:
+
+a = [121, 144, 19, 161, 19, 144, 19, 11] 
+b = [11*11, 121*121, 144*144, 19*19, 161*161, 19*19, 144*144, 19*19]
+Invalid arrays
+If, for example, we change the first number to something else, comp is not returning true anymore:
+
+a = [121, 144, 19, 161, 19, 144, 19, 11]  
+b = [132, 14641, 20736, 361, 25921, 361, 20736, 361]
+comp(a,b) returns false because in b 132 is not the square of any number of a.
+
+a = [121, 144, 19, 161, 19, 144, 19, 11]  
+b = [121, 14641, 20736, 36100, 25921, 361, 20736, 361]
+comp(a,b) returns false because in b 36100 is not the square of any number of a.
+
+Remarks
+a or b might be [] or {} (all languages except R, Shell).
+a or b might be nil or null or None or nothing (except in C++, COBOL, Crystal, D, Dart, Elixir, Fortran, F#, Haskell, Nim, OCaml, Pascal, Perl, PowerShell, Prolog, PureScript, R, Racket, Rust, Shell, Swift).
+If a or b are nil (or null or None, depending on the language), the problem doesn't make sense so return false.
+*/
+function comp(array1, array2) {
+  if (!array1 || !array2 || array1.length !== array2.length) return false;
+
+  array1.map((el) => el ** 2).sort((a, b) => a - b);
+  array2.sort((a, b) => a - b);
+
+  return array1.every((el, index) => el === array2[index]);
+}
+
+console.log(
+  comp(
+    [121, 144, 19, 161, 19, 144, 19, 11],
+    [121, 14641, 20736, 361, 25921, 361, 20736, 361]
+  )
+);
+
+/*
+Given an array of integers your solution should find the smallest integer.
+
+For example:
+
+Given [34, 15, 88, 2] your solution will return 2
+Given [34, -345, -1, 100] your solution will return -345
+You can assume, for the purpose of this kata, that the supplied array will not be empty.
+*/
+function findSmallestInt(args) {
+  return Math.min(...args);
+}
+
+console.log(findSmallestInt([34, 15, 88, 2]));
+
+/*
+There is a bus moving in the city which takes and drops some people at each bus stop.
+
+You are provided with a list (or array) of integer pairs. Elements of each pair represent the number of people that get on the bus (the first item) and the number of people that get off the bus (the second item) at a bus stop.
+
+Your task is to return the number of people who are still on the bus after the last bus stop (after the last array). Even though it is the last bus stop, the bus might not be empty and some people might still be inside the bus, they are probably sleeping there :D
+
+Take a look on the test cases.
+
+Please keep in mind that the test cases ensure that the number of people in the bus is always >= 0. So the returned integer can't be negative.
+
+The second value in the first pair in the array is 0, since the bus is empty in the first bus stop.
+*/
+function passengerCount(busStops) {
+  return busStops.reduce((people, [on, off]) => people + on - off, 0);
+}
+
+console.log(
+  passengerCount([
+    [10, 0],
+    [3, 5],
+    [5, 8],
+  ])
+);
