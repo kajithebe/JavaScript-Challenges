@@ -361,3 +361,109 @@ console.log(
     [5, 8],
   ])
 );
+
+/*
+You will be given a list of strings. You must sort it alphabetically (case-sensitive, and based on the ASCII values of the chars) and then return the first value.
+
+The returned value must be a string, and have "***" between each of its letters.
+
+You should not remove or add elements from/to the array.
+*/
+function twoSort(s) {
+  return s.sort()[0].split("").join("***");
+}
+
+console.log(
+  twoSort(["bitcoin", "take", "over", "the", "world", "maybe", "who"])
+);
+
+/*
+In this challenge you will create a function that takes a list of non-negative integers and strings and returns a new list with the strings filtered out.
+*/
+function filterList(l) {
+  return l.filter((el) => typeof el === "number");
+}
+
+console.log(filterList([1, 2, "a", "b"]));
+
+/*
+A child is playing with a ball on the nth floor of a tall building. The height of this floor above ground level, h, is known.
+
+He drops the ball out of the window. The ball bounces (for example), to two-thirds of its height (a bounce of 0.66).
+
+His mother looks out of a window 1.5 meters from the ground.
+
+How many times will the mother see the ball pass in front of her window (including when it's falling and bouncing)?
+
+Three conditions must be met for a valid experiment:
+Float parameter "h" in meters must be greater than 0
+Float parameter "bounce" must be greater than 0 and less than 1
+Float parameter "window" must be less than h.
+If all three conditions above are fulfilled, return a positive integer, otherwise return -1.
+
+Note:
+The ball can only be seen if the height of the rebounding ball is strictly greater than the window parameter.
+
+Examples:
+- h = 3, bounce = 0.66, window = 1.5, result is 3
+
+- h = 3, bounce = 1, window = 1.5, result is -1 
+
+(Condition 2) not fulfilled).
+*/
+function bouncingBall(h, bounce, window) {
+  if (h <= 0 || bounce <= 0 || bounce >= 1 || window >= h) return -1;
+  let count = 0;
+  while (h > window) {
+    count++;
+    h *= bounce;
+  }
+  return count * 2 - 1;
+}
+
+console.log(bouncingBall(3, 0.66, 1.5));
+
+/*
+Write a function, persistence, that takes in a positive parameter num and returns its multiplicative persistence, which is the number of times you must multiply the digits in num until you reach a single digit.
+
+For example (Input --> Output):
+
+39 --> 3 (because 3*9 = 27, 2*7 = 14, 1*4 = 4 and 4 has only one digit, there are 3 multiplications)
+999 --> 4 (because 9*9*9 = 729, 7*2*9 = 126, 1*2*6 = 12, and finally 1*2 = 2, there are 4 multiplications)
+4 --> 0 (because 4 is already a one-digit number, there is no multiplication)
+*/
+function persistence(num) {
+  let count = 0;
+  while (num.toString().length > 1) {
+    num = num
+      .toString()
+      .split("")
+      .reduce((acc, num) => acc * num, 1);
+    count++;
+  }
+  return count;
+}
+
+console.log(persistence(999));
+
+/*
+This function should test if the factor is a factor of base.
+
+Return true if it is a factor or false if it is not.
+
+About factors
+Factors are numbers you can multiply together to get another number.
+
+2 and 3 are factors of 6 because: 2 * 3 = 6
+
+You can find a factor by dividing numbers. If the remainder is 0 then the number is a factor.
+You can use the mod operator (%) to check for a remainder
+For example 2 is not a factor of 7 because: 7 % 2 = 1
+
+Note: base is a non-negative number, factor is a positive number.
+*/
+function checkForFactor(base, factor) {
+  return base % factor === 0;
+}
+
+console.log(checkForFactor(10, 2));
