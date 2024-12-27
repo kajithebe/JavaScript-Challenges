@@ -467,3 +467,84 @@ function checkForFactor(base, factor) {
 }
 
 console.log(checkForFactor(10, 2));
+
+/*
+In this game, the hero moves from left to right. The player rolls the dice and moves the number of spaces indicated by the dice two times.
+
+Create a function for the terminal game that takes the current position of the hero and the roll (1-6) and return the new position.
+
+Example:
+move(3, 6) should equal 15
+*/
+function move(position, roll) {
+  return position + roll * 2;
+}
+
+console.log(move(3, 6));
+
+/*
+Given an array of integers.
+
+Return an array, where the first element is the count of positives numbers and the second element is sum of negative numbers. 0 is neither positive nor negative.
+
+If the input is an empty array or is null, return an empty array.
+
+Example
+For input [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -11, -12, -13, -14, -15], you should return [10, -65].
+*/
+function countPositivesSumNegatives(input) {
+  if (input === null || input.length === 0) return [];
+  const positiveCount = input.filter((num) => num > 0).length;
+  const negativeSum = input
+    .filter((num) => num < 0)
+    .reduce((acc, num) => acc + num, 0);
+  return [positiveCount, negativeSum];
+}
+
+console.log(countPositivesSumNegatives([1, 2, 3, -4, -5]));
+
+/*
+Write a function that takes an array of strings as an argument and returns a sorted array containing the same strings, ordered from shortest to longest.
+
+For example, if this array were passed as an argument:
+
+["Telescopes", "Glasses", "Eyes", "Monocles"]
+Your function would return the following array:
+
+["Eyes", "Glasses", "Monocles", "Telescopes"]
+All of the strings in the array passed to your function will be different lengths, so you will not have to decide how to order multiple strings of the same length.
+*/
+function sortByLength(array) {
+  return array.sort((a, b) => a.length - b.length);
+}
+
+console.log(sortByLength(["Telescopes", "Glasses", "Eyes", "Monocles"]));
+
+/*
+You probably know the "like" system from Facebook and other pages. People can "like" blog posts, pictures or other items. We want to create the text that should be displayed next to such an item.
+
+Implement the function which takes an array containing the names of people that like an item. It must return the display text as shown in the examples:
+
+[]                                -->  "no one likes this"
+["Peter"]                         -->  "Peter likes this"
+["Jacob", "Alex"]                 -->  "Jacob and Alex like this"
+["Max", "John", "Mark"]           -->  "Max, John and Mark like this"
+["Alex", "Jacob", "Mark", "Max"]  -->  "Alex, Jacob and 2 others like this"
+Note: For 4 or more names, the number in "and 2 others" simply increases.
+*/
+function likes(names) {
+  switch (names.length) {
+    case 0:
+      return "no one likes this";
+    case 1:
+      return `${names[0]} likes this`;
+    case 2:
+      return `${names[0]} and ${names[1]} like this`;
+    case 3:
+      return `${names[0]}, ${names[1]} and ${names[2]} like this`;
+    default:
+      return `${names[0]}, ${names[1]} and ${
+        names.length - 2
+      } others like this`;
+  }
+}
